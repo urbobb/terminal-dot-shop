@@ -1,0 +1,12 @@
+{{! app/templates/login.hbs }}
+<h1>Login via Terminal</h1>
+
+<button
+  class="border rounded p-2 hover:cursor-pointer"
+  type="button"
+  {{on "click" this.login}}
+>Check Authentication Status</button>
+
+{{#if this.errorMessage}}
+  <div class="error">{{this.errorMessage}}</div>
+{{/if}}
