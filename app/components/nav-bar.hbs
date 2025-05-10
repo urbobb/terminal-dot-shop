@@ -1,22 +1,22 @@
 <nav class="text-white px-6 py-4 shadow-md">
   <div class="max-w-7xl mx-auto flex items-center justify-between">
     {{! <!-- Logo --> }}
-    <a
-      href="/"
+    <LinkTo
+      @route="index"
       class="flex items-center space-x-2 hover:text-amber-400 transition"
     >
       <span class="tracking-wide"><span class="text-xs">not</span>
         <span class="text-md">official</span>
         <span class="text-2xl font-bold">Terminal Shop</span></span>
-    </a>
+    </LinkTo>
 
     {{! <!-- Navigation Links --> }}
     <ul class="hidden md:flex space-x-6 text-sm font-medium">
       <li>
-        <a
-          href="/coffees"
+        <LinkTo
+          @route="coffees"
           class="hover:text-amber-400 transition text-xl"
-        >Coffeeeeeeee's</a>
+        >Coffeeeeeeee's</LinkTo>
       </li>
 
     </ul>
@@ -28,5 +28,13 @@
     >
       Order Coffee
     </a>
+
+  {{! <!-- Login/Logout Button --> }}
+    {{#if this.session.isAuthenticated}}
+      <a {{on "click" this.invalidateSession}} href="#" class="bg-amber-500 hover:bg-amber-600 text-gray-900 font-semibold px-4 py-2 rounded-md transition">Logout</a>
+      <p>Welcome, {{this.userEmail}}</p>
+    {{else}}
+      <LinkTo @route="login" class="bg-amber-500 hover:bg-amber-600 text-gray-900 font-semibold px-4 py-2 rounded-md transition">Login</LinkTo>
+    {{/if}}
   </div>
 </nav>
