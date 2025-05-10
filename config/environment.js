@@ -27,7 +27,7 @@ module.exports = function (environment) {
     terminalShopOAuth2: {
       TERMINAL_SHOP_CLIENT_ID: process.env.TERMINAL_SHOP_CLIENT_ID,
       TERMINAL_SHOP_CLIENT_SECRET: process.env.TERMINAL_SHOP_CLIENT_SECRET,
-      TERMINAL_SHOP_REDIRECT_URI: 'http://localhost:4200/auth/callback',
+      TERMINAL_SHOP_REDIRECT_URI: '',
       TERMINAL_SHOP_AUTHORIZE_URL: 'https://auth.terminal.shop/authorize',
       TERMINAL_SHOP_API_BASE: 'https://auth.terminal.shop',
       TERMINAL_SHOP_TOKEN_URL: 'https://auth.terminal.shop/token',
@@ -36,11 +36,7 @@ module.exports = function (environment) {
   };
 
   if (environment === 'development') {
-    // ENV.APP.LOG_RESOLVER = true;
-    // ENV.APP.LOG_ACTIVE_GENERATION = true;
-    // ENV.APP.LOG_TRANSITIONS = true;
-    // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
-    // ENV.APP.LOG_VIEW_LOOKUPS = true;
+    ENV.terminalShopOAuth2.TERMINAL_SHOP_REDIRECT_URI = 'http://localhost:4200/auth/callback';
   }
 
   if (environment === 'test') {
@@ -57,6 +53,7 @@ module.exports = function (environment) {
 
   if (environment === 'production') {
     // here you can enable a production-specific feature
+    ENV.terminalShopOAuth2.TERMINAL_SHOP_REDIRECT_URI = 'https://terminal-dot-shop.pages.dev/auth/callback';
   }
 
   return ENV;
