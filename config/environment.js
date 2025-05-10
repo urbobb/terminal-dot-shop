@@ -18,6 +18,21 @@ module.exports = function (environment) {
       // Here you can pass flags/options to your application instance
       // when it is created
     },
+
+    'ember-simple-auth': {
+      authenticationRoute: 'login',
+      routeAfterAuthentication: 'coffees',
+      routeIfAlreadyAuthenticated: 'coffees',
+    },
+    terminalShopOAuth2: {
+      TERMINAL_SHOP_CLIENT_ID: process.env.TERMINAL_SHOP_CLIENT_ID,
+      TERMINAL_SHOP_CLIENT_SECRET: process.env.TERMINAL_SHOP_CLIENT_SECRET,
+      TERMINAL_SHOP_REDIRECT_URI: 'http://localhost:4200/auth/callback',
+      TERMINAL_SHOP_AUTHORIZE_URL: 'https://auth.terminal.shop/authorize',
+      TERMINAL_SHOP_API_BASE: 'https://auth.terminal.shop',
+      TERMINAL_SHOP_TOKEN_URL: 'https://auth.terminal.shop/token',
+      scope: 'lol',
+    },
   };
 
   if (environment === 'development') {
