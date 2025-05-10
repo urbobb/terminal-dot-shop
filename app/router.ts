@@ -8,7 +8,6 @@ export default class Router extends EmberRouter {
 
 Router.map(function () {
   this.route('coffees');
-  this.route('order');
   this.route('auth', function () {
     this.route('callback');
   });
