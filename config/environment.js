@@ -36,7 +36,7 @@ module.exports = function (environment) {
   };
 
   if (environment === 'development') {
-    ENV.terminalShopOAuth2.TERMINAL_SHOP_REDIRECT_URI = 'https://terminal-dot-shop.pages.dev/auth/callback';
+    ENV.terminalShopOAuth2.TERMINAL_SHOP_REDIRECT_URI = 'http://localhost:4200/auth/callback';
   }
 
   if (environment === 'test') {
