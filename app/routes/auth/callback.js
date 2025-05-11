@@ -28,7 +28,7 @@ export default class AuthCallbackRoute extends Route {
         await this.session.authenticate('authenticator:terminal-shop-oauth2', {code});
       } catch (authError) {
         console.error('Token exchange failed', authError);
-        this.session.invalidate(); // ensure no session
+        this.session.invalidate();
         this.router.transitionTo('login');
       }
     }
