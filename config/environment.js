@@ -29,7 +29,7 @@ module.exports = function (environment) {
       TERMINAL_SHOP_CLIENT_SECRET: process.env.TERMINAL_SHOP_CLIENT_SECRET,
       TERMINAL_SHOP_REDIRECT_URI: '',
       TERMINAL_SHOP_AUTHORIZE_URL: 'https://auth.terminal.shop/authorize',
-      TERMINAL_SHOP_API_BASE: 'https://auth.terminal.shop',
+      TERMINAL_SHOP_API_BASE: 'https://api.terminal.shop',
       TERMINAL_SHOP_TOKEN_URL: 'https://auth.terminal.shop/token',
       scope: 'lol',
     },

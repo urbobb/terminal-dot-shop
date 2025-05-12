@@ -32,7 +32,11 @@
   {{! <!-- Login/Logout Button --> }}
     {{#if this.session.isAuthenticated}}
       <a {{on "click" this.invalidateSession}} href="#" class="bg-amber-500 hover:bg-amber-600 text-gray-900 font-semibold px-4 py-2 rounded-md transition">Logout</a>
-      <p>Welcome, {{this.userEmail}}</p>
+        {{#if this.user}}
+          <div>Welcome, {{this.userName}}</div>
+        {{else}}
+          <div>Loading profile...</div>
+        {{/if}}
     {{else}}
       <LinkTo @route="login" class="bg-amber-500 hover:bg-amber-600 text-gray-900 font-semibold px-4 py-2 rounded-md transition">Login</LinkTo>
     {{/if}}
