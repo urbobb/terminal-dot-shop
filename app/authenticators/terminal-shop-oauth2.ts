@@ -1,4 +1,4 @@
-import BaseAuthenticator from 'ember-simple-auth/authenticators/base';
+import Base from 'ember-simple-auth/authenticators/base';
 import { Promise as EmberPromise } from 'rsvp';
 import config from 'terminal-dot-shop/config/environment';
 import type { AuthData, SessionData } from 'terminal-dot-shop/types/OAuth';
@@ -15,7 +15,7 @@ const {
   TERMINAL_SHOP_REDIRECT_URI,
 } = config.terminalShopOAuth2;
 
-export default class OAuth2PkceAuthenticator extends BaseAuthenticator {
+export default class TerminalAuthenticator extends Base {
   async restore(data: SessionData) {
     if (
       data.access_token &&
