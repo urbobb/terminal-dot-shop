@@ -23,7 +23,11 @@ export default class NavBarComponent extends Component {
   }
 
   get userName() {
-    return this.user?.email?.split('@')[0] || '';
+    if (this.user?.name) {
+      return this.user.name;
+    } else if (this.user?.email) {
+      return this.user.email.split('@')[0] || '';
+    }
   }
 
   @action
