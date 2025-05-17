@@ -12,4 +12,5 @@ Router.map(function () {
     this.route('callback');
   });
   this.route('login');
+  this.route('profile');
 });
