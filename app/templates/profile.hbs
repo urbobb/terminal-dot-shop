@@ -1,10 +1,9 @@
 <div>
   <h1 class="text-2xl font-bold mb-4">Profile</h1>
-  {{#if this.user}}
+  {{#if this.model}}
     <a href="profile">Welcome, {{this.userName}}</a>
     <p class="text-lg">Welcome, {{this.userName}}!</p>
     <p class="text-sm text-gray-500">Email: {{this.userEmail}}</p>
-    {{!-- <p class="text-sm text-gray-500">Member since: {{this.userJoinDate}}</p> --}}
     <a
       href="/order"
       class="mt-4 inline-block bg-amber-500 hover:bg-amber-600 text-white font-semibold px-4 py-2 rounded-md transition"
