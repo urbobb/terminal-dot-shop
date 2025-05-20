@@ -1,0 +1,123 @@
+<form {{on "submit" this.submit}}>
+  <div class="flex flex-row justify-between">
+    <h1 class="text-2xl font-bold mb-4">Profile</h1>
+    {{#if this.isEditing}}
+      <button
+        type="submit"
+        class="border rounded-lg py-2 px-4 hover:cursor-pointer hover:bg-amber-600 transition duration-500"
+      >Save</button>
+    {{else}}
+      <button
+        type="button"
+        class="border rounded-lg py-2 px-4 hover:cursor-pointer hover:bg-amber-600 transition duration-500"
+        {{on "click" this.edit}}
+      >Edit</button>
+    {{/if}}
+  </div>
+
+  {{#if this.args.model}}
+    {{! Info }}
+    <div class="flex flex-row w-1/2 justify-between mb-5">
+      <div class="flex flex-col w-1/2">
+        <p class="text-gray-500 font-semibold">Name </p>
+        <textarea
+          id="name"
+          name="name"
+          rows="1"
+          cols="1"
+          class="font-light resize-none focus:outline-none focus:underline"
+          disabled={{if this.isEditing false true}}
+        >{{this.args.username}}</textarea>
+      </div>
+      <div class=" flex flex-col w-1/2">
+        <p class="text-gray-500 font-semibold">Email </p>
+        <textarea
+          id="email"
+          name="email"
+          rows="1"
+          cols="1"
+          class="font-light resize-none focus:outline-none focus:underline"
+          disabled={{if this.isEditing false true}}
+        >{{this.args.useremail}}</textarea>
+      </div>
+    </div>
+    {{! Address }}
+    <div class="flex flex-row w-1/2 justify-between mb-5">
+      <div class="flex flex-col w-1/2">
+        <p class="text-gray-500 font-semibold">Street </p>
+        <textarea
+          id="street"
+          name="street"
+          rows="1"
+          cols="1"
+          class="font-light resize-none focus:outline-none focus:underline"
+          disabled={{if this.isEditing false true}}
+        >Ny Street</textarea>
+      </div>
+      <div class="flex flex-col w-1/2">
+        <p class="text-gray-500 font-semibold">State </p>
+        <textarea
+          id="state"
+          name="state"
+          rows="1"
+          cols="1"
+          class="font-light resize-none focus:outline-none focus:underline"
+          disabled={{if this.isEditing false true}}
+        >New York</textarea>
+      </div>
+    </div>
+    <div class="flex flex-row w-1/2 justify-between mb-5">
+      <div class="flex flex-col w-1/2">
+        <p class="text-gray-500 font-semibold">City </p>
+        <textarea
+          id="city"
+          name="city"
+          rows="1"
+          cols="1"
+          class="font-light resize-none focus:outline-none focus:underline"
+          disabled={{if this.isEditing false true}}
+        >New york</textarea>
+      </div>
+      <div class="flex flex-col w-1/2">
+        <p class="text-gray-500 font-semibold">Country </p>
+        <select
+          id="country"
+          name="country"
+          class="font-light bg-black appearance-none"
+          disabled={{if this.isEditing false true}}
+        >
+          <option value="US">US</option>
+          <option value="EU">EU</option>
+        </select>
+      </div>
+    </div>
+    <div class="flex flex-row w-1/2 justify-between mb-5">
+      <div class="flex flex-col w-1/2">
+        <p class="text-gray-500 font-semibold">Postal code </p>
+        <textarea
+          id="postalCode"
+          name="postalCode"
+          rows="1"
+          cols="1"
+          type="number"
+          class="font-light resize-none focus:outline-none focus:underline"
+          disabled={{if this.isEditing false true}}
+        >000100</textarea>
+      </div>
+      <div class="flex flex-col w-1/2">
+        <p class="text-gray-500 font-semibold">Phone </p>
+        <textarea
+          id="phone"
+          name="phone"
+          rows="1"
+          cols="1"
+          type="number"
+          class="font-light resize-none focus:outline-none focus:underline"
+          disabled={{if this.isEditing false true}}
+        >202932039274</textarea>
+      </div>
+    </div>
+  {{else}}
+    <a href="profile">Loading profile...</a>
+  {{/if}}
+</form>
