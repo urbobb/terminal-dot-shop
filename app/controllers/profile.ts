@@ -5,18 +5,17 @@ export default class ProfileController extends Controller {
   model: Profile | null = null;
 
   get userName(): string {
-    const user = this.model as unknown as Profile | null;
+    const user = this.model as Profile;
     if (user?.name) {
       return user.name;
     } else if (user?.email) {
       return user.email.split('@')[0] || '';
     }
     return '';
-
   }
 
   get userEmail(): string {
-    const user = this.model as unknown as Profile | null;
+    const user = this.model as Profile;
     if (user?.email) {
       return user.email;
     }
