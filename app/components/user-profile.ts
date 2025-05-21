@@ -5,7 +5,10 @@ import { service } from '@ember/service';
 
 interface ProfileForm {
   name: string,
-   email: string,
+  email: string,
+}
+
+interface AddressForm {
   street: string,
   state: string,
   city: string,
@@ -17,7 +20,8 @@ interface ProfileForm {
 export default class UserProfileComponent extends Component {
   @service session;
 
-  @tracked isEditing: boolean = false;
+  @tracked isEditingProfile: boolean = false;
+  @tracked isEditingAddress: boolean = false;
   @tracked name: string = '';
   @tracked email: string = '';
   @tracked street: string = '';
@@ -29,12 +33,36 @@ export default class UserProfileComponent extends Component {
 
 
   @action
-  edit() {
-    this.isEditing = !this.isEditing;
+  editProfile() {
+    this.isEditingProfile = !this.isEditingProfile;
   }
 
   @action
-  submit(e: Event) {
+  submitProfileForm(e: Event) {
+    e.preventDefault();
+
+    const form = e.target as HTMLFormElement;
+    const formData = new FormData(form);
+    console.log(formData)
+    const data = {};
+
+    for (let [key, value] of formData.entries()) {
+      data[key] = value;
+    }
+
+    const { name, email  } = data as ProfileForm;
+    console.log('Form data: ', name, email);
+
+    this.isEditingProfile = false;
+  }
+
+  @action
+  editAddress() {
+    this.isEditingAddress = !this.isEditingAddress;
+  }
+
+  @action
+  submitAddressForm(e: Event) {
     e.preventDefault();
 
     const form = e.target as HTMLFormElement;
@@ -45,9 +73,10 @@ export default class UserProfileComponent extends Component {
       data[key] = value;
     }
 
-    const { name, email, street, state, city, country, postalCode, phone  } = data as ProfileForm;
-    console.log('Form data: ', name, email, street, state, city, country, postalCode, phone)
+    const { street } = data as AddressForm;
+    console.log("Form Data: ", street)
 
-    this.isEditing = false;
+    this.isEditingAddress = false;
+
   }
 }

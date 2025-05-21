@@ -1,21 +1,30 @@
 import Route from '@ember/routing/route';
 import { service } from '@ember/service';
-import type { Profile } from 'terminal-dot-shop/types/terminal-api';
+import type { Profile, Address } from 'terminal-dot-shop/types/terminal-api';
 export default class ProfileRoute extends Route {
   @service session;
   @service profile;
+  @service address;
 
   beforeModel(transition) {
     this.session.requireAuthentication(transition, 'login');
   }
 
-  async model(): Promise<Profile | null> {
+  async model() {
+    //fetch address
     try {
-      const profile = await this.profile.getProfile();
-      return profile as Profile;
+      const userProfile = await this.profile.getProfile();
+      const userAddress = await this.address.getAddress();
+      console.log("Address", userAddress)
+      return {
+        profile: userProfile as Profile,
+        address: userAddress as Address,
+      };
     } catch (error) {
       console.error('Error fetching user profile in route model:', error);
       throw error;
     }
   }
+
+
 }
