@@ -13,7 +13,6 @@ export default class AddressService extends Service {
     const access_token = this.session.data.authenticated.access_token as string;
     const client = new Terminal({
       bearerToken: access_token,
-      baseURL: TERMINAL_SHOP_API_BASE as string,
     });
 
     const address = await client.address.list();

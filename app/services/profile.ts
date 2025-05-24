@@ -13,7 +13,6 @@ export default class ProfileService extends Service {
     const access_token = this.session.data.authenticated.access_token as string;
     const client = new Terminal({
       bearerToken: access_token,
-      baseURL: TERMINAL_SHOP_API_BASE as string,
     });
 
     const profile = await client.profile.me();
