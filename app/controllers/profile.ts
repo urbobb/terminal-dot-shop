@@ -6,6 +6,15 @@ interface ProfileRouteModel {
   address: Address | null;
 }
 
+interface UserAddress {
+  street: string;
+  city: string;
+  postalCode: string;
+  state: string;
+  country: string;
+  phone: string | null;
+}
+
 export default class ProfileController extends Controller {
   model: ProfileRouteModel | null = null;
 
@@ -27,16 +36,16 @@ export default class ProfileController extends Controller {
     return '';
   }
 
-  get userAddress(): object | undefined {
-    const user = this.model?.address;
-    if (user) {
+  get userAddress(): UserAddress | undefined {
+    const address = this.model?.address;
+    if (address) {
       return {
-        street: user.street1,
-        city: user.city,
-        postalCode: user.zip,
-        state: user.state,
-        country: user.country,
-        phone: user.phone,
+        street: address[0].street1,
+        city: address[0].city,
+        postalCode: address[0].zip,
+        state: address[0].state,
+        country: address[0].country,
+        phone: address[0].phone ? address[0].phone : null,
       };
     }
     return undefined;
