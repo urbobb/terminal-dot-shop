@@ -19,6 +19,8 @@ interface AddressForm {
 
 export default class UserProfileComponent extends Component {
   @service session;
+  @service address;
+  @service router;
 
   @tracked isEditingProfile: boolean = false;
   @tracked isEditingAddress: boolean = false;
@@ -46,19 +48,24 @@ export default class UserProfileComponent extends Component {
     console.log(formData)
     const data = {};
 
-    for (let [key, value] of formData.entries()) {
+    for (const [key, value] of formData.entries()) {
       data[key] = value;
     }
 
     const { name, email  } = data as ProfileForm;
-    console.log('Form data: ', name, email);
 
     this.isEditingProfile = false;
   }
 
   @action
-  editAddress() {
+  editAddress(e: Event) {
+    e.preventDefault();
     this.isEditingAddress = !this.isEditingAddress;
+    const form = e.target as HTMLFormElement;
+    const formData = new FormData(form);
+    console.log(formData)
+    // Logic to edit address
+    console.log('Edit address action triggered');
   }
 
   @action
@@ -67,16 +74,31 @@ export default class UserProfileComponent extends Component {
 
     const form = e.target as HTMLFormElement;
     const formData = new FormData(form);
+    console.log(formData)
     const data = {};
 
-    for (let [key, value] of formData.entries()) {
+    for (const [key, value] of formData.entries()) {
       data[key] = value;
     }
 
     const { street } = data as AddressForm;
-    console.log("Form Data: ", street)
 
     this.isEditingAddress = false;
+  }
 
+  @action
+  async deleteAddress(address) {
+    const addressId = address.id as string;
+    if (confirm(`Are you sure you want to delete the address with ID: ${addressId}?`)) {
+      try {
+        await this.address.deleteAddress(addressId);
+        console.log(`Address with ID ${addressId} deleted successfully.`);
+        this.router.refresh();
+      }
+      catch (error) {
+        console.error('Error deleting address:', error);
+        alert('Failed to delete address. Please try again later.');
+      }
+    }
   }
 }

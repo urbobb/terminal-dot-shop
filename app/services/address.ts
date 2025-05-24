@@ -18,4 +18,15 @@ export default class AddressService extends Service {
     const address = await client.address.list();
     return address.data;
   }
+
+  async deleteAddress(addressId: string) {
+    const access_token = this.session.data.authenticated.access_token as string;
+    const client = new Terminal({
+      bearerToken: access_token,
+    });
+
+    const addressToDelete = await client.address.delete(addressId);
+    return addressToDelete;
+
+  }
 }
