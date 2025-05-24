@@ -18,7 +18,7 @@ export default class ProfileRoute extends Route {
       console.log("Address", userAddress)
       return {
         profile: userProfile as Profile,
-        address: userAddress as Address,
+        addresses: userAddress as Address,
       };
     } catch (error) {
       console.error('Error fetching user profile in route model:', error);
