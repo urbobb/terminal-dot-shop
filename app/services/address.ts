@@ -25,19 +25,8 @@ export default class AddressService extends Service {
     const client = new Terminal({
       bearerToken: access_token,
     });
-    console.log("Creating address with data:", addressData);
-    const address = await client.address.create(
-      {
-        name: "John Doe",
-        street1: "532-616 Brittania St",
-        street2: "",
-        city: "Los Angeles",
-        province: "CA",
-        zip: "90001",
-        country: "US",
-        phone: "123-456-7890",
-      }
-    );
+    console.log('Creating address with data:', addressData);
+    const address = await client.address.create(addressData);
     return address;
   }
 
@@ -49,6 +38,5 @@ export default class AddressService extends Service {
 
     const addressToDelete = await client.address.delete(addressId);
     return addressToDelete;
-
   }
 }
