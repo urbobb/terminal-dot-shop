@@ -87,6 +87,30 @@ export default class UserProfileComponent extends Component {
   }
 
   @action
+  async submitNewAddressForm(e: Event) {
+    e.preventDefault();
+    const form = e.target as HTMLFormElement;
+    const formData = new FormData(form);
+    console.log(formData);
+    const data = {};
+    for (const [key, value] of formData.entries()) {
+      data[key] = value;
+    }
+    const { street1, street2, state, city, country, zip, phone } = data as AddressForm;
+    console.log('Submitting new address:', street1, street2, state, city, country, zip, phone);
+
+      try {
+        await this.address.createAddress(data as AddressForm);
+        console.log('Address created successfully.');
+      }
+      catch (error) {
+        console.error('Error deleting address:', error);
+        alert('Failed to add address. Please try again later.');
+      }
+
+  }
+
+  @action
   async deleteAddress(address) {
     const addressId = address.id as string;
     if (confirm(`Are you sure you want to delete the address with ID: ${addressId}?`)) {

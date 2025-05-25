@@ -55,14 +55,20 @@
       {{! Address }}
       <div class="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
         {{#each this.args.addresses as |address|}}
-          <div class="relative w-full p-4 border rounded-2xl border-gray-300 pb-5 mb-5">
+          <div
+            class="relative w-full p-4 border rounded-2xl border-gray-300 pb-5 mb-5"
+          >
             <div class="absolute top-4 right-4 flex flex-row gap-4">
-              <button class="hover:cursor-pointer hover:-translate-y-1 transition duration-500" type="submit"
+              <button
+                class="hover:cursor-pointer hover:-translate-y-1 transition duration-500"
+                type="submit"
                 {{on "click" (fn this.editAddress address)}}
               >
                 <Icon @trash={{true}} />
               </button>
-              <button class="hover:cursor-pointer hover:-translate-y-1 transition duration-500" type="button"
+              <button
+                class="hover:cursor-pointer hover:-translate-y-1 transition duration-500"
+                type="button"
                 {{on "click" (fn this.deleteAddress address)}}
               >
                 <Icon @edit={{true}} />
@@ -105,9 +111,7 @@
                 >{{address.city}}</textarea>
               </div>
               <div class="flex flex-col w-1/2">
-                <p
-                  class="text-gray-500 font-semibold"
-                >{{address.country}}</p>
+                <p class="text-gray-500 font-semibold">{{address.country}}</p>
                 <select
                   id="country"
                   name="country"
@@ -147,6 +151,123 @@
             </div>
           </div>
         {{/each}}
+      </div>
+      {{! Add a new address }}
+      <div>
+        <h1 class="text-2xl font-bold mb-4">Add a new address</h1>
+        <form
+          class="relative w-full p-4 pb-5 mb-5 flex flex-col gap-5"
+          {{on "submit" this.submitNewAddressForm}}
+        >
+
+          <div class="flex flex-row w-1/2 justify-between mb-5">
+            <div class="flex flex-col w-1/2">
+              <p class="text-gray-500 font-semibold">Name </p>
+              <input
+                id="name"
+                name="name"
+                rows="1"
+                cols="1"
+                class="font-light resize-none focus:outline-none focus:underline"
+                placeholder="John Doe"
+              />
+            </div>
+            <div class="flex flex-col w-1/2">
+              <p class="text-gray-500 font-semibold">State</p>
+              <input
+                id="province"
+                name="province"
+                rows="1"
+                cols="1"
+                class="font-light resize-none focus:outline-none focus:underline"
+                placeholder="California"
+              />
+            </div>
+          </div>
+          <div class="flex flex-row w-1/2 justify-between mb-5">
+            <div class="flex flex-col w-1/2">
+              <p class="text-gray-500 font-semibold">Street 1</p>
+              <input
+                id="street1"
+                name="street1"
+                rows="1"
+                cols="1"
+                class="font-light resize-none focus:outline-none focus:underline"
+                placeholder="Los Angeles"
+              />
+            </div>
+            <div class="flex flex-col w-1/2">
+              <p class="text-gray-500 font-semibold">Country</p>
+              <select
+                id="country"
+                name="country"
+                class="font-light bg-black appearance-none"
+              >
+                <option value="US">US</option>
+                <option value="EU">EU</option>
+              </select>
+            </div>
+          </div>
+          <div class="flex flex-row w-1/2 justify-between mb-5">
+            <div class="flex flex-col w-1/2">
+              <p class="text-gray-500 font-semibold">Street 2</p>
+              <textarea
+                id="street2"
+                name="street2"
+                rows="1"
+                cols="1"
+                class="font-light resize-none focus:outline-none focus:underline"
+                placeholder="90001"
+              ></textarea>
+            </div>
+            <div class="flex flex-col w-1/2">
+              <p class="text-gray-500 font-semibold">Phone </p>
+              <textarea
+                id="phone"
+                name="phone"
+                rows="1"
+                cols="1"
+                type="number"
+                class="font-light resize-none focus:outline-none focus:underline"
+                placeholder="123-456-7890"
+              ></textarea>
+            </div>
+          </div>
+          <div class="flex flex-row w-1/2 justify-between mb-5">
+            <div class="flex flex-col w-1/2">
+              <p class="text-gray-500 font-semibold">City</p>
+              <textarea
+                id="city"
+                name="city"
+                rows="1"
+                cols="1"
+                class="font-light resize-none focus:outline-none focus:underline"
+                placeholder="90001"
+              ></textarea>
+            </div>
+            <div class="flex flex-col w-1/2">
+              <p class="text-gray-500 font-semibold">Postal code</p>
+              <textarea
+                id="zip"
+                name="zip"
+                rows="1"
+                cols="1"
+                type="number"
+                class="font-light resize-none focus:outline-none focus:underline"
+                placeholder="90001"
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="flex flex-row w-1/3 justify-end gap-5">
+            <button
+              class="border rounded-xl px-4 py-2 text-lg hover:bg-amber-500 hover:border-amber-500 hover:cursor-pointer hover:-translate-y-1 transition duration-500"
+              type="submit"
+            >
+              Add
+            </button>
+          </div>
+        </form>
       </div>
     {{else}}
       <a href="profile">Loading profile...</a>
