@@ -61,7 +61,7 @@
             <div class="absolute top-4 right-4 flex flex-row gap-4">
               <button
                 class="hover:cursor-pointer hover:-translate-y-1 transition duration-500"
-                type="submit"
+                type="button"
                 {{on "click" (fn this.editAddress address)}}
               >
                 <Icon @trash={{true}} />
@@ -75,103 +75,111 @@
               </button>
             </div>
             <div class="flex flex-row w-1/2 justify-between mb-5">
-            <div class="flex flex-col w-1/2">
-              <p class="text-gray-500 font-semibold">Name </p>
-              <textarea
-                id="name"
-                name="name"
-                rows="1"
-                cols="1"
-                class="font-light resize-none focus:outline-none focus:underline"
-                placeholder="John Doe"
-              >{{address.name}}</textarea>
+              <div class="flex flex-col w-1/2">
+                <p class="text-gray-500 font-semibold">Name </p>
+                <textarea
+                  id="name"
+                  name="name"
+                  rows="1"
+                  cols="1"
+                  class="font-light resize-none focus:outline-none focus:underline"
+                  placeholder="John Doe"
+                  disabled={{if this.isEditingAddress false true}}
+                >{{address.name}}</textarea>
+              </div>
+              <div class="flex flex-col w-1/2">
+                <p class="text-gray-500 font-semibold">State</p>
+                <textarea
+                  id="province"
+                  name="province"
+                  rows="1"
+                  cols="1"
+                  class="font-light resize-none focus:outline-none focus:underline"
+                  placeholder="CA"
+                  disabled={{if this.isEditingAddress false true}}
+                >{{address.province}}</textarea>
+              </div>
             </div>
-            <div class="flex flex-col w-1/2">
-              <p class="text-gray-500 font-semibold">State</p>
-              <textarea
-                id="province"
-                name="province"
-                rows="1"
-                cols="1"
-                class="font-light resize-none focus:outline-none focus:underline"
-                placeholder="California"
-              >{{address.province}}</textarea>
+            <div class="flex flex-row w-1/2 justify-between mb-5">
+              <div class="flex flex-col w-1/2">
+                <p class="text-gray-500 font-semibold">Street 1</p>
+                <textarea
+                  id="street1"
+                  name="street1"
+                  rows="1"
+                  cols="1"
+                  class="font-light resize-none focus:outline-none focus:underline"
+                  placeholder="123 Main St"
+                  disabled={{if this.isEditingAddress false true}}
+                >{{address.street1}}</textarea>
+              </div>
+              <div class="flex flex-col w-1/2">
+                <p class="text-gray-500 font-semibold">Country</p>
+                <select
+                  id="country"
+                  name="country"
+                  class="font-light bg-black appearance-none"
+                  disabled={{if this.isEditingAddress false true}}
+                >
+                  <option value="US">US</option>
+                  <option value="EU">EU</option>
+                </select>
+              </div>
             </div>
-          </div>
-          <div class="flex flex-row w-1/2 justify-between mb-5">
-            <div class="flex flex-col w-1/2">
-              <p class="text-gray-500 font-semibold">Street 1</p>
-              <textarea
-                id="street1"
-                name="street1"
-                rows="1"
-                cols="1"
-                class="font-light resize-none focus:outline-none focus:underline"
-                placeholder="Los Angeles"
-              >{{address.street1}}</textarea>
+            <div class="flex flex-row w-1/2 justify-between mb-5">
+              <div class="flex flex-col w-1/2">
+                <p class="text-gray-500 font-semibold">Street 2</p>
+                <textarea
+                  id="street2"
+                  name="street2"
+                  rows="1"
+                  cols="1"
+                  class="font-light resize-none focus:outline-none focus:underline"
+                  placeholder="Apt 4B"
+                  disabled={{if this.isEditingAddress false true}}
+                >{{if address.street2 address.street2 "-"}}</textarea>
+              </div>
+              <div class="flex flex-col w-1/2">
+                <p class="text-gray-500 font-semibold">Phone </p>
+                <textarea
+                  id="phone"
+                  name="phone"
+                  rows="1"
+                  cols="1"
+                  type="number"
+                  class="font-light resize-none focus:outline-none focus:underline"
+                  placeholder="123-456-7890"
+                  disabled={{if this.isEditingAddress false true}}
+                >{{address.phone}}</textarea>
+              </div>
             </div>
-            <div class="flex flex-col w-1/2">
-              <p class="text-gray-500 font-semibold">Country</p>
-              <select
-                id="country"
-                name="country"
-                class="font-light bg-black appearance-none"
-              >
-                <option value="US">US</option>
-                <option value="EU">EU</option>
-              </select>
+            <div class="flex flex-row w-1/2 justify-between mb-5">
+              <div class="flex flex-col w-1/2">
+                <p class="text-gray-500 font-semibold">City</p>
+                <textarea
+                  id="city"
+                  name="city"
+                  rows="1"
+                  cols="1"
+                  class="font-light resize-none focus:outline-none focus:underline"
+                  placeholder="Los Angeles"
+                  disabled={{if this.isEditingAddress false true}}
+                >{{address.city}}</textarea>
+              </div>
+              <div class="flex flex-col w-1/2">
+                <p class="text-gray-500 font-semibold">Postal code</p>
+                <textarea
+                  id="zip"
+                  name="zip"
+                  rows="1"
+                  cols="1"
+                  type="number"
+                  class="font-light resize-none focus:outline-none focus:underline"
+                  placeholder="90001"
+                  disabled={{if this.isEditingAddress false true}}
+                >{{address.zip}}</textarea>
+              </div>
             </div>
-          </div>
-          <div class="flex flex-row w-1/2 justify-between mb-5">
-            <div class="flex flex-col w-1/2">
-              <p class="text-gray-500 font-semibold">Street 2</p>
-              <textarea
-                id="street2"
-                name="street2"
-                rows="1"
-                cols="1"
-                class="font-light resize-none focus:outline-none focus:underline"
-                placeholder="90001"
-              >{{if address.street2 address.street2 "-"}}</textarea>
-            </div>
-            <div class="flex flex-col w-1/2">
-              <p class="text-gray-500 font-semibold">Phone </p>
-              <textarea
-                id="phone"
-                name="phone"
-                rows="1"
-                cols="1"
-                type="number"
-                class="font-light resize-none focus:outline-none focus:underline"
-                placeholder="123-456-7890"
-              >{{address.phone}}</textarea>
-            </div>
-          </div>
-          <div class="flex flex-row w-1/2 justify-between mb-5">
-            <div class="flex flex-col w-1/2">
-              <p class="text-gray-500 font-semibold">City</p>
-              <textarea
-                id="city"
-                name="city"
-                rows="1"
-                cols="1"
-                class="font-light resize-none focus:outline-none focus:underline"
-                placeholder="90001"
-              >{{address.city}}</textarea>
-            </div>
-            <div class="flex flex-col w-1/2">
-              <p class="text-gray-500 font-semibold">Postal code</p>
-              <textarea
-                id="zip"
-                name="zip"
-                rows="1"
-                cols="1"
-                type="number"
-                class="font-light resize-none focus:outline-none focus:underline"
-                placeholder="90001"
-              >{{address.zip}}</textarea>
-            </div>
-          </div>
           </div>
         {{/each}}
       </div>
@@ -203,7 +211,7 @@
                 rows="1"
                 cols="1"
                 class="font-light resize-none focus:outline-none focus:underline"
-                placeholder="California"
+                placeholder="CA"
               />
             </div>
           </div>
@@ -216,7 +224,7 @@
                 rows="1"
                 cols="1"
                 class="font-light resize-none focus:outline-none focus:underline"
-                placeholder="Los Angeles"
+                placeholder="123 Main St"
               />
             </div>
             <div class="flex flex-col w-1/2">
@@ -240,7 +248,7 @@
                 rows="1"
                 cols="1"
                 class="font-light resize-none focus:outline-none focus:underline"
-                placeholder="90001"
+                placeholder="Apt 4B"
               ></textarea>
             </div>
             <div class="flex flex-col w-1/2">
@@ -265,7 +273,7 @@
                 rows="1"
                 cols="1"
                 class="font-light resize-none focus:outline-none focus:underline"
-                placeholder="90001"
+                placeholder="Los Angeles"
               ></textarea>
             </div>
             <div class="flex flex-col w-1/2">
