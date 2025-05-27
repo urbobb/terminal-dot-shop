@@ -63,7 +63,6 @@ export default class UserProfileComponent extends Component {
 
   @action
   enableEdit(address: AddressForm) {
-    console.log(address.id);
     if (address.id && !this.isEditingAddress) {
       this.isEditingAddress = true;
       this.editingAddressId = address.id; // Set editingAddressId to the address id
@@ -76,21 +75,10 @@ export default class UserProfileComponent extends Component {
   @action
   submitAddressForm(address: AddressForm, e: Event) {
     e.preventDefault();
-    console.log('Confirm edit address:', address);
-
     this.isEditingAddress = false;
     this.editingAddressId = null; // set to null after submission
-
-    const form = e.target as HTMLFormElement;
-    const formData = new FormData(form);
-    console.log(formData);
-    const data = {};
-
-    for (const [key, value] of formData.entries()) {
-      data[key] = value;
-    }
-
-    const { street } = data as AddressForm;
+    // update address api endpoint not available yet
+    // did all that work for nothing.......
   }
 
   @action
