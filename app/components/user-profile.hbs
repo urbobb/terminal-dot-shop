@@ -47,7 +47,7 @@
     {{/if}}
   </form>
 
-  <form {{on "submit" this.submitAddressForm}}>
+  <div>
     <div class="flex flex-row justify-between">
       <h1 class="text-2xl font-bold mb-4">Address</h1>
     </div>
@@ -55,23 +55,44 @@
       {{! Address }}
       <div class="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
         {{#each this.args.addresses as |address|}}
-          <div
+          <form
+            {{on "submit" (fn this.submitAddressForm address)}}
             class="relative w-full p-4 border rounded-2xl border-gray-300 pb-5 mb-5"
           >
             <div class="absolute top-4 right-4 flex flex-row gap-4">
-              <button
-                class="hover:cursor-pointer hover:-translate-y-1 transition duration-500"
-                type="button"
-                {{on "click" (fn this.editAddress address)}}
-              >
-                <Icon @trash={{true}} />
-              </button>
+              <div>{{this.editingAddressId.id}}</div>
+              {{#unless
+                (and
+                  (eq this.editingAddressId address.id)
+                  (not this.isEditingAddress)
+                )
+              }}
+                <button
+                  class="hover:cursor-pointer hover:-translate-y-1 transition duration-500"
+                  type="button"
+                  {{on "click" (fn this.enableEdit address)}}
+                >
+                  <Icon @edit={{true}} />
+                </button>
+              {{/unless}}
+              {{#if
+                (and
+                  (eq this.editingAddressId address.id) this.isEditingAddress
+                )
+              }}
+                <button
+                  class="hover:cursor-pointer hover:-translate-y-1 transition duration-500"
+                  type="submit"
+                >
+                  <Icon @confirm={{true}} />
+                </button>
+              {{/if}}
               <button
                 class="hover:cursor-pointer hover:-translate-y-1 transition duration-500"
                 type="button"
                 {{on "click" (fn this.deleteAddress address)}}
               >
-                <Icon @edit={{true}} />
+                <Icon @trash={{true}} />
               </button>
             </div>
             <div class="flex flex-row w-1/2 justify-between mb-5">
@@ -180,7 +201,7 @@
                 >{{address.zip}}</textarea>
               </div>
             </div>
-          </div>
+          </form>
         {{/each}}
       </div>
       {{! Add a new address }}
@@ -303,5 +324,5 @@
     {{else}}
       <a href="profile">Loading profile...</a>
     {{/if}}
-  </form>
+  </div>
 </div>

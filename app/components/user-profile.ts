@@ -17,6 +17,7 @@ interface AddressForm {
   country: string;
   zip: string;
   phone: string | null;
+  id: string;
 }
 
 export default class UserProfileComponent extends Component {
@@ -26,6 +27,7 @@ export default class UserProfileComponent extends Component {
 
   @tracked isEditingProfile: boolean = false;
   @tracked isEditingAddress: boolean = false;
+  @tracked editingAddressId: string | null = null;
   @tracked name: string = '';
   @tracked email: string = '';
   @tracked street1: string = '';
@@ -60,18 +62,24 @@ export default class UserProfileComponent extends Component {
   }
 
   @action
-  editAddress(e: Event) {
-    this.isEditingAddress = !this.isEditingAddress;
-    // const form = e.target as HTMLFormElement;
-    // const formData = new FormData(form);
-    // console.log(formData);
-    // // Logic to edit address
-    // console.log('Edit address action triggered');
+  enableEdit(address: AddressForm) {
+    console.log(address.id);
+    if (address.id && !this.isEditingAddress) {
+      this.isEditingAddress = true;
+      this.editingAddressId = address.id; // Set editingAddressId to the address id
+    } else {
+      this.isEditingAddress = false;
+      this.editingAddressId = null; // Reset editingAddressId when toggling off
+    }
   }
 
   @action
-  submitAddressForm(e: Event) {
+  submitAddressForm(address: AddressForm, e: Event) {
     e.preventDefault();
+    console.log('Confirm edit address:', address);
+
+    this.isEditingAddress = false;
+    this.editingAddressId = null; // set to null after submission
 
     const form = e.target as HTMLFormElement;
     const formData = new FormData(form);
@@ -83,8 +91,6 @@ export default class UserProfileComponent extends Component {
     }
 
     const { street } = data as AddressForm;
-
-    this.isEditingAddress = false;
   }
 
   @action
