@@ -18,4 +18,13 @@ export default class ProfileService extends Service {
     const profile = await client.profile.me();
     return profile.data.user;
   }
+
+  async updateProfile(profileData: { name: string; email: string }) {
+    const access_token = this.session.data.authenticated.access_token as string;
+    const client = new Terminal({
+      bearerToken: access_token,
+    });
+    const updatedProfile = await client.profile.update(profileData);
+    return updatedProfile;
+  }
 }

@@ -23,6 +23,7 @@ interface AddressForm {
 export default class UserProfileComponent extends Component {
   @service session;
   @service address;
+  @service profile;
   @service router;
 
   @tracked isEditingProfile: boolean = false;
@@ -44,12 +45,11 @@ export default class UserProfileComponent extends Component {
   }
 
   @action
-  submitProfileForm(e: Event) {
+  async submitProfileForm(e: Event) {
     e.preventDefault();
 
     const form = e.target as HTMLFormElement;
     const formData = new FormData(form);
-    console.log(formData);
     const data = {};
 
     for (const [key, value] of formData.entries()) {
@@ -58,7 +58,14 @@ export default class UserProfileComponent extends Component {
 
     const { name, email } = data as ProfileForm;
 
-    this.isEditingProfile = false;
+    try {
+      await this.profile.updateProfile(data as ProfileForm);
+      console.log('Profile updated successfully.');
+      this.isEditingProfile = false;
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      alert('Failed to update profile. Please try again later.');
+    }
   }
 
   @action
