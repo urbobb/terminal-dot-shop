@@ -1,11 +1,11 @@
 import Controller from '@ember/controller';
+import { action } from '@ember/object';
 import type { Profile, Address } from 'terminal-dot-shop/types/terminal-api';
 
 interface ProfileRouteModel {
   profile: Profile | null;
-  address: Address | null;
+  addresses: Address[] | null;
 }
-
 export default class ProfileController extends Controller {
   model: ProfileRouteModel | null = null;
 
@@ -27,17 +27,10 @@ export default class ProfileController extends Controller {
     return '';
   }
 
-  get userAddress(): object | undefined {
-    const user = this.model?.address;
-    if (user) {
-      return {
-        street: user.street1,
-        city: user.city,
-        postalCode: user.zip,
-        state: user.state,
-        country: user.country,
-        phone: user.phone,
-      };
+  get userAddress(): Address[] | undefined {
+    const addresses = this.model?.addresses;
+    if (addresses && addresses.length > 0) {
+      return addresses;
     }
     return undefined;
   }

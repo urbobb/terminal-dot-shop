@@ -11,7 +11,7 @@
         <button
           type="button"
           class="border rounded-lg py-2 px-4 hover:cursor-pointer hover:bg-amber-600 transition duration-500"
-          {{on "click" this.edit}}
+          {{on "click" this.editProfile}}
         >Edit</button>
       {{/if}}
     </div>
@@ -30,7 +30,7 @@
             disabled={{if this.isEditingProfile false true}}
           >{{this.args.username}}</textarea>
         </div>
-        <div class=" flex flex-col w-1/2">
+        <div class="flex flex-col w-1/2">
           <p class="text-gray-500 font-semibold">Email </p>
           <textarea
             id="email"
@@ -47,101 +47,282 @@
     {{/if}}
   </form>
 
-  <form {{on "submit" this.submitAddressForm}}>
+  <div>
     <div class="flex flex-row justify-between">
       <h1 class="text-2xl font-bold mb-4">Address</h1>
-      {{#if this.isEditingProfile}}
-        <button
-          type="submit"
-          class="border rounded-lg py-2 px-4 hover:cursor-pointer hover:bg-amber-600 transition duration-500"
-        >Save</button>
-      {{else}}
-        <button
-          type="button"
-          class="border rounded-lg py-2 px-4 hover:cursor-pointer hover:bg-amber-600 transition duration-500"
-          {{on "click" this.edit}}
-        >Edit</button>
-      {{/if}}
     </div>
-    {{#if this.args.model}}
-    {{! Address }}
-      <div class="flex flex-row w-1/2 justify-between mb-5">
-        <div class="flex flex-col w-1/2">
-          <p class="text-gray-500 font-semibold">Street </p>
-          <textarea
-            id="street"
-            name="street"
-            rows="1"
-            cols="1"
-            class="font-light resize-none focus:outline-none focus:underline"
-            disabled={{if this.isEditingAddress false true}}
-          >Ny Street</textarea>
-        </div>
-        <div class="flex flex-col w-1/2">
-          <p class="text-gray-500 font-semibold">State </p>
-          <textarea
-            id="state"
-            name="state"
-            rows="1"
-            cols="1"
-            class="font-light resize-none focus:outline-none focus:underline"
-            disabled={{if this.isEditingAddress false true}}
-          >New York</textarea>
-        </div>
-      </div>
-      <div class="flex flex-row w-1/2 justify-between mb-5">
-        <div class="flex flex-col w-1/2">
-          <p class="text-gray-500 font-semibold">City </p>
-          <textarea
-            id="city"
-            name="city"
-            rows="1"
-            cols="1"
-            class="font-light resize-none focus:outline-none focus:underline"
-            disabled={{if this.isEditingAddress false true}}
-          >New york</textarea>
-        </div>
-        <div class="flex flex-col w-1/2">
-          <p class="text-gray-500 font-semibold">Country </p>
-          <select
-            id="country"
-            name="country"
-            class="font-light bg-black appearance-none"
-            disabled={{if this.isEditingAddress false true}}
+    {{#if this.args.addresses}}
+      {{! Address }}
+      <div class="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
+        {{#each this.args.addresses as |address|}}
+          <form
+            {{on "submit" (fn this.submitAddressForm address)}}
+            class="relative w-full p-4 border rounded-2xl border-gray-300 pb-5 mb-5"
           >
-            <option value="US">US</option>
-            <option value="EU">EU</option>
-          </select>
-        </div>
+            <div class="absolute top-4 right-4 flex flex-row gap-4">
+              <div>{{this.editingAddressId.id}}</div>
+              {{#unless
+                (and
+                  (eq this.editingAddressId address.id) this.isEditingAddress
+                )
+              }}
+                <button
+                  class="hover:cursor-pointer hover:-translate-y-1 transition duration-500"
+                  type="button"
+                  {{on "click" (fn this.enableEdit address)}}
+                >
+                  <Icon @edit={{true}} />
+                </button>
+              {{/unless}}
+              {{#if
+                (and
+                  (eq this.editingAddressId address.id) this.isEditingAddress
+                )
+              }}
+                <button
+                  class="hover:cursor-pointer hover:-translate-y-1 transition duration-500"
+                  type="submit"
+                >
+                  <Icon @confirm={{true}} />
+                </button>
+              {{/if}}
+              <button
+                class="hover:cursor-pointer hover:-translate-y-1 transition duration-500"
+                type="button"
+                {{on "click" (fn this.deleteAddress address)}}
+              >
+                <Icon @trash={{true}} />
+              </button>
+            </div>
+            <div class="flex flex-row w-10/12 justify-between mb-5">
+              <div class="flex flex-col w-1/2">
+                <p class="text-gray-500 font-semibold">Name </p>
+                <textarea
+                  id="name"
+                  name="name"
+                  rows="1"
+                  cols="1"
+                  class="font-light resize-none focus:outline-none focus:underline"
+                  placeholder="John Doe"
+                  disabled={{if this.isEditingAddress false true}}
+                >{{address.name}}</textarea>
+              </div>
+              <div class="flex flex-col w-1/2">
+                <p class="text-gray-500 font-semibold">State</p>
+                <textarea
+                  id="province"
+                  name="province"
+                  rows="1"
+                  cols="1"
+                  class="font-light resize-none focus:outline-none focus:underline"
+                  placeholder="CA"
+                  disabled={{if this.isEditingAddress false true}}
+                >{{address.province}}</textarea>
+              </div>
+            </div>
+            <div class="flex flex-row w-10/12 justify-between mb-5">
+              <div class="flex flex-col w-1/2">
+                <p class="text-gray-500 font-semibold">Street 1</p>
+                <textarea
+                  id="street1"
+                  name="street1"
+                  rows="1"
+                  cols="1"
+                  class="font-light resize-none focus:outline-none focus:underline"
+                  placeholder="123 Main St"
+                  disabled={{if this.isEditingAddress false true}}
+                >{{address.street1}}</textarea>
+              </div>
+              <div class="flex flex-col w-1/2">
+                <p class="text-gray-500 font-semibold">Country</p>
+                <select
+                  id="country"
+                  name="country"
+                  class="font-light bg-black appearance-none"
+                  disabled={{if this.isEditingAddress false true}}
+                >
+                  <option value="US">US</option>
+                  <option value="EU">EU</option>
+                </select>
+              </div>
+            </div>
+            <div class="flex flex-row w-10/12 justify-between mb-5">
+              <div class="flex flex-col w-1/2">
+                <p class="text-gray-500 font-semibold">Street 2</p>
+                <textarea
+                  id="street2"
+                  name="street2"
+                  rows="1"
+                  cols="1"
+                  class="font-light resize-none focus:outline-none focus:underline"
+                  placeholder="Apt 4B"
+                  disabled={{if this.isEditingAddress false true}}
+                >{{if address.street2 address.street2 "-"}}</textarea>
+              </div>
+              <div class="flex flex-col w-1/2">
+                <p class="text-gray-500 font-semibold">Phone </p>
+                <textarea
+                  id="phone"
+                  name="phone"
+                  rows="1"
+                  cols="1"
+                  type="number"
+                  class="font-light resize-none focus:outline-none focus:underline"
+                  placeholder="123-456-7890"
+                  disabled={{if this.isEditingAddress false true}}
+                >{{address.phone}}</textarea>
+              </div>
+            </div>
+            <div class="flex flex-row w-10/12 justify-between mb-5">
+              <div class="flex flex-col w-1/2">
+                <p class="text-gray-500 font-semibold">City</p>
+                <textarea
+                  id="city"
+                  name="city"
+                  rows="1"
+                  cols="1"
+                  class="font-light resize-none focus:outline-none focus:underline"
+                  placeholder="Los Angeles"
+                  disabled={{if this.isEditingAddress false true}}
+                >{{address.city}}</textarea>
+              </div>
+              <div class="flex flex-col w-1/2">
+                <p class="text-gray-500 font-semibold">Postal code</p>
+                <textarea
+                  id="zip"
+                  name="zip"
+                  rows="1"
+                  cols="1"
+                  type="number"
+                  class="font-light resize-none focus:outline-none focus:underline"
+                  placeholder="90001"
+                  disabled={{if this.isEditingAddress false true}}
+                >{{address.zip}}</textarea>
+              </div>
+            </div>
+          </form>
+        {{/each}}
       </div>
-      <div class="flex flex-row w-1/2 justify-between mb-5">
-        <div class="flex flex-col w-1/2">
-          <p class="text-gray-500 font-semibold">Postal code </p>
-          <textarea
-            id="postalCode"
-            name="postalCode"
-            rows="1"
-            cols="1"
-            type="number"
-            class="font-light resize-none focus:outline-none focus:underline"
-            disabled={{if this.isEditingAddress false true}}
-          >000100</textarea>
-        </div>
-        <div class="flex flex-col w-1/2">
-          <p class="text-gray-500 font-semibold">Phone </p>
-          <textarea
-            id="phone"
-            name="phone"
-            rows="1"
-            cols="1"
-            type="number"
-            class="font-light resize-none focus:outline-none focus:underline"
-            disabled={{if this.isEditingAddress false true}}
-          >202932039274</textarea>
-        </div>
+      {{! Add a new address }}
+      <div>
+        <h1 class="text-2xl font-bold mb-4">Add a new address</h1>
+        <form
+          class="relative w-full p-4 pb-5 mb-5 flex flex-col gap-5"
+          {{on "submit" this.submitNewAddressForm}}
+        >
+
+          <div class="flex flex-row w-1/2 justify-between mb-5">
+            <div class="flex flex-col w-1/2">
+              <p class="text-gray-500 font-semibold">Name </p>
+              <input
+                id="name"
+                name="name"
+                rows="1"
+                cols="1"
+                class="font-light resize-none focus:outline-none focus:underline"
+                placeholder="John Doe"
+              />
+            </div>
+            <div class="flex flex-col w-1/2">
+              <p class="text-gray-500 font-semibold">State</p>
+              <input
+                id="province"
+                name="province"
+                rows="1"
+                cols="1"
+                class="font-light resize-none focus:outline-none focus:underline"
+                placeholder="CA"
+              />
+            </div>
+          </div>
+          <div class="flex flex-row w-1/2 justify-between mb-5">
+            <div class="flex flex-col w-1/2">
+              <p class="text-gray-500 font-semibold">Street 1</p>
+              <input
+                id="street1"
+                name="street1"
+                rows="1"
+                cols="1"
+                class="font-light resize-none focus:outline-none focus:underline"
+                placeholder="123 Main St"
+              />
+            </div>
+            <div class="flex flex-col w-1/2">
+              <p class="text-gray-500 font-semibold">Country</p>
+              <select
+                id="country"
+                name="country"
+                class="font-light bg-black appearance-none"
+              >
+                <option value="US">US</option>
+                <option value="EU">EU</option>
+              </select>
+            </div>
+          </div>
+          <div class="flex flex-row w-1/2 justify-between mb-5">
+            <div class="flex flex-col w-1/2">
+              <p class="text-gray-500 font-semibold">Street 2</p>
+              <textarea
+                id="street2"
+                name="street2"
+                rows="1"
+                cols="1"
+                class="font-light resize-none focus:outline-none focus:underline"
+                placeholder="Apt 4B"
+                disabled
+              ></textarea>
+            </div>
+            <div class="flex flex-col w-1/2">
+              <p class="text-gray-500 font-semibold">Phone </p>
+              <textarea
+                id="phone"
+                name="phone"
+                rows="1"
+                cols="1"
+                type="number"
+                class="font-light resize-none focus:outline-none focus:underline"
+                placeholder="123-456-7890"
+              ></textarea>
+            </div>
+          </div>
+          <div class="flex flex-row w-1/2 justify-between mb-5">
+            <div class="flex flex-col w-1/2">
+              <p class="text-gray-500 font-semibold">City</p>
+              <textarea
+                id="city"
+                name="city"
+                rows="1"
+                cols="1"
+                class="font-light resize-none focus:outline-none focus:underline"
+                placeholder="Los Angeles"
+              ></textarea>
+            </div>
+            <div class="flex flex-col w-1/2">
+              <p class="text-gray-500 font-semibold">Postal code</p>
+              <textarea
+                id="zip"
+                name="zip"
+                rows="1"
+                cols="1"
+                type="number"
+                class="font-light resize-none focus:outline-none focus:underline"
+                placeholder="90001"
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="w-1/3 ">
+            <button
+              class="w-full border rounded-xl px-4 py-2 text-lg hover:bg-amber-500 hover:border-amber-500 hover:cursor-pointer hover:-translate-y-1 transition duration-500"
+              type="submit"
+            >
+              Add
+            </button>
+          </div>
+        </form>
       </div>
     {{else}}
       <a href="profile">Loading profile...</a>
     {{/if}}
-  </form>
+  </div>
 </div>

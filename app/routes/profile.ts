@@ -13,18 +13,19 @@ export default class ProfileRoute extends Route {
   async model() {
     //fetch address
     try {
-      const userProfile = await this.profile.getProfile();
-      const userAddress = await this.address.getAddress();
-      console.log("Address", userAddress)
+      const [userProfile, userAddresses] = await Promise.all([
+        this.profile.getProfile(),
+        this.address.getAddress()
+      ]) as [Profile, Address[]];
+      console.log("Address", userAddresses)
       return {
-        profile: userProfile as Profile,
-        address: userAddress as Address,
+        profile: userProfile,
+        addresses: userAddresses,
       };
     } catch (error) {
       console.error('Error fetching user profile in route model:', error);
       throw error;
     }
   }
-
 
 }
