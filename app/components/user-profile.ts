@@ -115,7 +115,7 @@ export default class UserProfileComponent extends Component {
       await this.address.createAddress(data as AddressForm);
       console.log('Address created successfully.');
     } catch (error) {
-      console.error('Error deleting address:', error);
+      console.error('Error creating address:', error);
       alert('Failed to add address. Please try again later.');
     }
   }
