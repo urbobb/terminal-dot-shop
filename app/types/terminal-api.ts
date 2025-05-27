@@ -7,12 +7,12 @@ export interface Profile {
 export interface Address {
   name: string;
   street1: string;
-  street2: string;
+  street2?: string;
   city: string;
-  state: string;
+  province: string;
   zip: string;
   country: string;
   phone: string;
-  created: string,
+  created?: string,
   id: string,
 }
