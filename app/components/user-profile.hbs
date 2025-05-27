@@ -63,8 +63,7 @@
               <div>{{this.editingAddressId.id}}</div>
               {{#unless
                 (and
-                  (eq this.editingAddressId address.id)
-                  (not this.isEditingAddress)
+                  (eq this.editingAddressId address.id) this.isEditingAddress
                 )
               }}
                 <button
