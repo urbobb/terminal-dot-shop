@@ -10,35 +10,56 @@
         <span class="text-2xl font-bold">Terminal Shop</span></span>
     </LinkTo>
 
-    {{! <!-- Navigation Links --> }}
-    <ul class="hidden md:flex space-x-6 text-sm font-medium">
-      <li>
-        <LinkTo
-          @route="coffees"
-          class="hover:text-amber-400 transition text-xl"
-        >Coffeeeeeeee's</LinkTo>
-      </li>
+    {{! <!-- Mobile Menu Button --> }}
+    <div class="md:hidden">
+      <button class="text-white focus:outline-none" type="button">
+        Todo
+      </button>
+    </div>
 
-    </ul>
+    {{! <!-- Navigation Links and Buttons Container --> }}
+    <div class="hidden md:flex items-center space-x-6">
+      {{! <!-- Navigation Links --> }}
+      <ul class="flex space-x-6 text-sm font-medium">
+        <li>
+          <LinkTo
+            @route="coffees"
+            class="hover:text-amber-400 transition text-xl"
+          >Menu</LinkTo>
+        </li>
+      </ul>
 
-    {{! <!-- CTA Button --> }}
-    <a
-      href="/order"
-      class="bg-amber-500 hover:bg-amber-600 text-gray-900 font-semibold px-4 py-2 rounded-md transition"
-    >
-      Order Coffee
-    </a>
+      {{! <!-- CTA Button --> }}
+      <a
+        href="/cart"
+        class="bg-amber-500 hover:bg-amber-600 text-gray-900 font-semibold p-4 rounded-md transition"
+      >
+        <Icon @cart={{true}} />
+      </a>
 
-  {{! <!-- Login/Logout Button --> }}
-    {{#if this.session.isAuthenticated}}
-      <a {{on "click" this.invalidateSession}} href="#" class="bg-amber-500 hover:bg-amber-600 text-gray-900 font-semibold px-4 py-2 rounded-md transition">Logout</a>
+      {{! <!-- Login/Logout Button --> }}
+      {{#if this.session.isAuthenticated}}
         {{#if this.user}}
-          <a href="profile">Welcome, {{this.userName}}</a>
+        <div class="p-4 bg-[#333] rounded-lg">
+          <div class="flex flex-row items-center space-x-5">
+              <a
+              {{on "click" this.invalidateSession}}
+              href="#"
+            ><Icon @logout={{true}}/></a>
+            <a href="profile">
+              <Icon @profile={{true}} />
+            </a>
+          </div>
+        </div>
         {{else}}
           <div>Loading profile...</div>
         {{/if}}
-    {{else}}
-      <LinkTo @route="login" class="bg-amber-500 hover:bg-amber-600 text-gray-900 font-semibold px-4 py-2 rounded-md transition">Login</LinkTo>
-    {{/if}}
+      {{else}}
+        <LinkTo
+          @route="login"
+          class="bg-amber-500 hover:bg-amber-600 text-gray-900 font-semibold px-4 py-2 rounded-md transition"
+        >Login</LinkTo>
+      {{/if}}
+    </div>
   </div>
 </nav>
