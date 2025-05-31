@@ -16,3 +16,23 @@ export interface Address {
   created?: string,
   id: string,
 }
+
+interface Variant {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+}
+
+export interface Coffee {
+  id: string;
+  name: string;
+  description: string;
+  variants: Variant[];
+  order: number;
+  subscription: string;
+  tags: {
+    features: boolean;
+  };
+  filters: any[];
+}
