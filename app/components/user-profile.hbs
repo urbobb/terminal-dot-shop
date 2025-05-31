@@ -61,10 +61,10 @@
           >
             <div class="absolute top-4 right-4 flex flex-row gap-4">
               <div>{{this.editingAddressId.id}}</div>
-              {{#unless
-                (and
+              {{#if
+                (not (and
                   (eq this.editingAddressId address.id) this.isEditingAddress
-                )
+                ))
               }}
                 <button
                   class="hover:cursor-pointer hover:-translate-y-1 transition duration-500"
@@ -73,7 +73,7 @@
                 >
                   <Icon @edit={{true}} />
                 </button>
-              {{/unless}}
+              {{/if}}
               {{#if
                 (and
                   (eq this.editingAddressId address.id) this.isEditingAddress
