@@ -9,14 +9,12 @@ interface CoffeesRouteModel {
 }
 
 export default class CoffeesController extends Controller {
-  @tracked
-  loadCoffees = this.model;
-  // get loadCoffees() {
-  //   const coffees = this.model?.coffees as Coffee[] | null;
-  //   if (coffees) {
-  //     console.log("Coffees loaded:", coffees);
-  //     return coffees
-  //   }
-  //   return [];
-  // }
+
+  get loadCoffees() {
+    const coffees = this.model as CoffeesRouteModel | null;
+    if (coffees) {
+      return coffees
+    }
+    return [];
+  }
 }
