@@ -2,6 +2,9 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
+import type CustomSessionService from 'terminal-dot-shop/services/session';
+import type AddressService from 'terminal-dot-shop/services/address';
+import type ProfileService from 'terminal-dot-shop/services/profile';
 
 interface ProfileForm {
   name: string;
@@ -21,9 +24,9 @@ interface AddressForm {
 }
 
 export default class UserProfileComponent extends Component {
-  @service session;
-  @service address;
-  @service profile;
+  @service declare session: CustomSessionService;
+  @service declare address: AddressService;
+  @service declare profile: ProfileService;
   @service router;
 
   @tracked isEditingProfile: boolean = false;
