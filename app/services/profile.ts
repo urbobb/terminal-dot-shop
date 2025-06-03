@@ -2,11 +2,12 @@ import Service from '@ember/service';
 import { service } from '@ember/service';
 import Terminal from '@terminaldotshop/sdk';
 import config from 'terminal-dot-shop/config/environment';
+import type CustomSessionService from './session';
 
 const { TERMINAL_SHOP_API_BASE } = config.terminalShopOAuth2;
 
 export default class ProfileService extends Service {
-  @service session: any;
+  @service declare session: CustomSessionService;
   @service store: any;
 
   async getProfile() {

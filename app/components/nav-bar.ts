@@ -4,12 +4,13 @@ import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import config from 'terminal-dot-shop/config/environment';
 import type { Profile } from 'terminal-dot-shop/types/terminal-api';
-
+import type CustomSessionService from 'terminal-dot-shop/services/session';
+import type ProfileService from 'terminal-dot-shop/services/profile';
 
 const { TERMINAL_SHOP_API_BASE } = config.terminalShopOAuth2;
 export default class NavBarComponent extends Component {
-  @service session;
-  @service profile;
+  @service declare session: CustomSessionService;
+  @service declare profile: ProfileService;
 
   @tracked user: Profile | null = null;
 

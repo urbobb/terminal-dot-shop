@@ -3,11 +3,12 @@ import { service } from '@ember/service';
 import Terminal from '@terminaldotshop/sdk';
 import config from 'terminal-dot-shop/config/environment';
 import type { Address } from 'terminal-dot-shop/types/terminal-api';
+import type CustomSessionService from './session';
 
 const { TERMINAL_SHOP_API_BASE } = config.terminalShopOAuth2;
 
 export default class AddressService extends Service {
-  @service session: any;
+  @service declare session: CustomSessionService;
   @service store: any;
 
   async getAddress() {

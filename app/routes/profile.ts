@@ -1,10 +1,13 @@
 import Route from '@ember/routing/route';
 import { service } from '@ember/service';
+import type AddressService from 'terminal-dot-shop/services/address';
+import type ProfileService from 'terminal-dot-shop/services/profile';
+import type CustomSessionService from 'terminal-dot-shop/services/session';
 import type { Profile, Address } from 'terminal-dot-shop/types/terminal-api';
 export default class ProfileRoute extends Route {
-  @service session;
-  @service profile;
-  @service address;
+  @service declare session: CustomSessionService;
+  @service declare profile: ProfileService;
+  @service declare address: AddressService;
 
   beforeModel(transition) {
     this.session.requireAuthentication(transition, 'login');
