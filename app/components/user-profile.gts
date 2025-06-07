@@ -67,6 +67,7 @@ export default class UserProfileComponent extends Component {
       await this.profile.updateProfile(data as ProfileForm);
       console.log('Profile updated successfully.');
       this.isEditingProfile = false;
+      window.location.reload();
     } catch (error) {
       console.error('Error updating profile:', error);
       alert('Failed to update profile. Please try again later.');
@@ -116,6 +117,7 @@ export default class UserProfileComponent extends Component {
     try {
       await this.address.createAddress(data as AddressForm);
       console.log('Address created successfully.');
+      window.location.reload();
     } catch (error) {
       console.error('Error creating address:', error);
       alert('Failed to add address. Please try again later.');
@@ -132,7 +134,7 @@ export default class UserProfileComponent extends Component {
       try {
         await this.address.deleteAddress(addressId);
         console.log(`Address with ID ${addressId} deleted successfully.`);
-        this.router.refresh();
+        window.location.reload();
       } catch (error) {
         console.error('Error deleting address:', error);
         alert('Failed to delete address. Please try again later.');
