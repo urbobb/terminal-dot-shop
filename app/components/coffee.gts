@@ -1,15 +1,19 @@
 import Component from '@glimmer/component';
+import { service } from '@ember/service';
 import { action } from '@ember/object';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
 import Icon from 'terminal-dot-shop/components/icon';
 import type { Coffee } from 'terminal-dot-shop/types/terminal-api';
+import type CartService from 'terminal-dot-shop/services/cart';
 
 interface CoffeesRouteModel {
   coffees: Coffee[] | null;
 }
 
 export default class CoffeeComponent extends Component {
+  @service declare cart: CartService;
+
   get loadCoffees() {
     const coffees = this.model as CoffeesRouteModel | null;
     if (coffees) {
@@ -20,7 +24,8 @@ export default class CoffeeComponent extends Component {
   }
 
   @action
-  addCart(coffee){
+  addToCart(coffee: Coffee){
+    this.cart.addItem(coffee);
     console.log("Coffee List: ", coffee);
   }
 
@@ -35,7 +40,7 @@ export default class CoffeeComponent extends Component {
         <button
           type="button"
           class="p-3 border border-amber-500 rounded-lg hover:cursor-pointer hover:bg-amber-500 transition duration-300"
-          {{on "click" (fn this.addCart @coffee)}}
+          {{on "click" (fn this.addToCart @coffee)}}
         >
           <Icon @add={{true}}/>
         </button>
