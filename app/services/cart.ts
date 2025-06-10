@@ -22,16 +22,9 @@ export default class CartService extends Service {
     console.log(existingItemIndex)
 
     if (existingItemIndex !== -1) {
-      const updatedItem = {
-        ...this.items[existingItemIndex],
-        quantity: this.items[existingItemIndex].quantity + 1
-      };
-
-      this.items = [
-        ...this.items.slice(0, existingItemIndex),
-        updatedItem,
-        ...this.items.slice(existingItemIndex + 1)
-      ];
+      if (this.items[existingItemIndex]) {
+        this.items[existingItemIndex].quantity += 1;
+      }
     } else {
       this.items = [...this.items, { ...coffee, quantity: 1 }]
     }
