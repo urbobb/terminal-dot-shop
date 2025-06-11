@@ -6,6 +6,12 @@ import type { Coffee } from 'terminal-dot-shop/types/terminal-api';
 export default class CartService extends Service {
   @tracked items: (Coffee & { quantity: number })[] = [];
 
+  constructor(owner: unknown, args: unknown) {
+    super(owner, args)
+    const itemsJson = localStorage.getItem("items");
+    this.items = itemsJson ? JSON.parse(itemsJson) as (Coffee & {quantify: number}) : [];
+  }
+
   get totalItemsCount() {
     const itemsJson = localStorage.getItem("items");
     let itemsCount: number | null = null;
