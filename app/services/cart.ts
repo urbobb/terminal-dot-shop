@@ -9,17 +9,16 @@ export default class CartService extends Service {
   constructor(owner: unknown, args: unknown) {
     super(owner, args)
     const itemsJson = localStorage.getItem("items");
-    this.items = itemsJson ? JSON.parse(itemsJson) as (Coffee & {quantify: number}) : [];
+    this.items = itemsJson ? JSON.parse(itemsJson) as (Coffee & {quantity: number}) : [];
   }
 
   get totalItemsCount() {
-    const itemsJson = localStorage.getItem("items");
     let itemsCount: number | null = null;
-    const items: (Coffee & { quantity: number })[] = [];
-    items.forEach(item => {
+
+    this.items.forEach(item => {
       itemsCount += item.quantity;
     });
-    return itemsCount
+    return itemsCount;
   }
 
   @action

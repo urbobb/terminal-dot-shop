@@ -42,10 +42,10 @@ export default class NavBarComponent extends Component {
     this.session.invalidate();
   }
 
-  itemsCount(){
-    itemsInCart = this.cart.totalItemsCount;
+  get itemsCount(){
+    const itemsInCart = this.cart.totalItemsCount;
     console.log("Total Items: ", itemsInCart);
-    return itemsInCart;
+    return itemsInCart as  number;
   }
 
   <template>
@@ -85,12 +85,12 @@ export default class NavBarComponent extends Component {
             href="/cart"
             class="relative bg-amber-500 hover:bg-amber-600 text-gray-900 font-semibold p-4 rounded-md transition hover:cursor-pointer"
           >
-            {{#if (gt this.cart.totalItemsCount 0)}}
-            {{!-- {{/log this.cart.totalItemsCount }} --}}
+            {{#if (gt this.itemsCount 0)}}
+
               <div
                 class="absolute top-1 right-2 px-2 max-w-[8px] flex items-center justify-center bg-white text-black text-xs font-extralight rounded-full border border-amber-400"
               >
-                <span class="tracking-wide">{{this.cart.totalItemsCount}}</span>
+                <span class="tracking-wide">{{this.itemsCount}}</span>
               </div>
             {{/if}}
             <Icon @cart={{true}} />
