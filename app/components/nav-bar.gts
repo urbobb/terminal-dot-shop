@@ -43,6 +43,9 @@ export default class NavBarComponent extends Component {
   }
 
   get itemsCount(){
+    if(!this.session.isAuthenticated){
+      return 0;
+    }
     const itemsInCart = this.cart.totalItemsCount;
     console.log("Total Items: ", itemsInCart);
     return itemsInCart as  number;
