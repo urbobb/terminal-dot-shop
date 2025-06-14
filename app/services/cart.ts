@@ -7,9 +7,11 @@ export default class CartService extends Service {
   @tracked items: (Coffee & { quantity: number })[] = [];
 
   constructor(owner: unknown, args: unknown) {
-    super(owner, args)
-    const itemsJson = localStorage.getItem("items");
-    this.items = itemsJson ? JSON.parse(itemsJson) as (Coffee & {quantity: number}) : [];
+    super(owner, args);
+    const itemsJson = localStorage.getItem('items');
+    this.items = itemsJson
+      ? (JSON.parse(itemsJson) as Coffee & { quantity: number })
+      : [];
   }
 
   get totalItemsCount() {
@@ -27,9 +29,11 @@ export default class CartService extends Service {
     console.log(existingItemIndex)
 
     if (existingItemIndex !== -1) {
-      if (this.items[existingItemIndex]) {
-        this.items[existingItemIndex].quantity += 1;
-      }
+      this.items = this.items.map((item, idx) =>
+        idx === existingItemIndex
+          ? { ...item, quantity: item.quantity + 1 }
+          : item,
+      );
     } else {
       this.items = [...this.items, { ...coffee, quantity: 1 }]
     }
