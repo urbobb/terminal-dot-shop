@@ -23,6 +23,14 @@ export default class CartService extends Service {
     return itemsCount;
   }
 
+  get getItems() {
+    return this.items;
+  }
+
+  set removeItem(item: Coffee) {
+    console.log("Removed")
+  }
+
   @action
   addItem(coffee: Coffee) {
     const existingItemIndex = this.items.findIndex(item => item.id == coffee.id)
