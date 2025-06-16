@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { action } from '@ember/object';
 import { on } from '@ember/modifier';
+import { fn } from '@ember/helper';
 import { tracked } from '@glimmer/tracking';
 import Icon from 'terminal-dot-shop/components/icon';
 import type { Coffee } from 'terminal-dot-shop/types/terminal-api';
@@ -17,7 +18,7 @@ export default class CartListComponent extends Component {
   @tracked items: CoffeeModel = [];
 
   get cartItems(): CoffeeModel {
-    return this.args.model as CoffeeModel;
+    return this.cart.getItems as CoffeeModel;
   }
 
   @action
