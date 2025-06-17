@@ -17,7 +17,7 @@ export default class CartService extends Service {
   get totalItemsCount() {
     let itemsCount: number | null = null;
 
-    this.items.forEach(item => {
+    this.items.forEach((item) => {
       itemsCount += item.quantity;
     });
     return itemsCount;
@@ -27,14 +27,12 @@ export default class CartService extends Service {
     return this.items;
   }
 
-  set removeItem(item: Coffee) {
-    console.log("Removed")
-  }
-
   @action
   addItem(coffee: Coffee) {
-    const existingItemIndex = this.items.findIndex(item => item.id == coffee.id)
-    console.log(existingItemIndex)
+    const existingItemIndex = this.items.findIndex(
+      (item) => item.id == coffee.id,
+    );
+    console.log(existingItemIndex);
 
     if (existingItemIndex !== -1) {
       this.items = this.items.map((item, idx) =>
@@ -43,9 +41,40 @@ export default class CartService extends Service {
           : item,
       );
     } else {
-      this.items = [...this.items, { ...coffee, quantity: 1 }]
+      this.items = [...this.items, { ...coffee, quantity: 1 }];
     }
-    localStorage.setItem("items", JSON.stringify(this.items));
+    localStorage.setItem('items', JSON.stringify(this.items));
+  }
+
+  @action
+  subtractItem(coffee: Coffee) {
+    const existingItemIndex = this.items.findIndex(
+      (item) => item.id == coffee.id,
+    );
+
+    if (existingItemIndex !== -1 && this.items[existingItemIndex] !== undefined && this.items[existingItemIndex].quantity > 0) {
+      this.items = this.items.map((item, idx) =>
+        idx === existingItemIndex
+          ? { ...item, quantity: item.quantity - 1 }
+          : item,
+      );
+      if (this.items[existingItemIndex] && this.items[existingItemIndex].quantity <= 0) {
+        this.removeItem(coffee);
+      }
+    }
+    localStorage.setItem('items', JSON.stringify(this.items));
+  }
+
+  @action
+  removeItem(coffee: Coffee) {
+    const before = this.items.length;
+    this.items = this.items.filter(item => item.id !== coffee.id);
+
+    if (this.items.length < before) {
+      console.log("Deleted: ", this.items);
+      localStorage.setItem('items', JSON.stringify(this.items));
+    }
+
   }
 }
 
@@ -55,6 +84,6 @@ export default class CartService extends Service {
 // like `@service('cart') declare altName: CartService;`.
 declare module '@ember/service' {
   interface Registry {
-    'cart': CartService;
+    cart: CartService;
   }
 }
