@@ -66,6 +66,7 @@ export default class NavBarComponent extends Component {
 
         {{! <!-- Mobile Menu Button --> }}
         <div class="md:hidden">
+
           <button class="text-white focus:outline-none" type="button">
             Todo
           </button>

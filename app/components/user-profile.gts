@@ -5,6 +5,7 @@ import Icon from 'terminal-dot-shop/components/icon';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
 import { not, eq, and } from 'ember-truth-helpers';
+import formatCompactNumber from 'terminal-dot-shop/helpers/format-compact-number';
 import type CustomSessionService from 'terminal-dot-shop/services/session';
 import type AddressService from 'terminal-dot-shop/services/address';
 import type ProfileService from 'terminal-dot-shop/services/profile';
@@ -45,6 +46,12 @@ export default class UserProfileComponent extends Component {
   @tracked country: string = '';
   @tracked zip: string = '';
   @tracked phone: string | null = null;
+  @tracked prices = [
+    1200,
+    12345,
+    120000,
+    2500000
+  ];
 
   editProfile = () => {
     this.isEditingProfile = !this.isEditingProfile;
@@ -144,6 +151,21 @@ export default class UserProfileComponent extends Component {
 
 
   <template>
+    <div>
+      {{!-- <div class="min-w-fit text-white">Number: {{formatCompactNumber this.price currency='EUR'}}</div> --}}
+        {{#each this.prices as |price|}}
+          <div class="bg-white p-4 rounded-lg border border-gray-200 text-center">
+            <p class="text-lg text-gray-600">Original: {{price}}</p>
+            <p class="text-xl font-semibold text-blue-600">
+              Formatted (EUR): {{formatCompactNumber price currency="EUR"}}
+            </p>
+             <p class="text-xl font-semibold text-green-600">
+              Formatted (USD): {{formatCompactNumber price currency="USD"}}
+            </p>
+          </div>
+        {{/each}}
+    </div>
+
     <form aria-label="Edit user profile" {{on "submit" this.submitProfileForm}}>
       <div class="flex flex-row justify-between">
         <h1 class="text-2xl font-bold mb-4">Profile</h1>
